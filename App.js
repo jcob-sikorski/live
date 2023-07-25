@@ -1,20 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import * as Location from 'expo-location';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import CameraScreen from './CameraScreen';
+import MapViewScreen from './MapViewScreen';
+
+const Stack = createStackNavigator();
 
 export default function App() {
+  const [location, setLocation] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      // Get current user location
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Location permission denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location.coords);
+    })();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Main" options={{ headerShown: false }}>
+          {({ navigation }) => (
+            <MapViewScreen navigation={navigation} location={location} />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="Camera">
+          {({ navigation }) => <CameraScreen navigation={navigation} />}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
