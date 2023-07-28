@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Modal } from 'react-native'; // Import TouchableOpacity and Modal
+import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { StatusBar } from 'expo-status-bar';
 import BottomButtons from './BottomButtons';
 import { StyleSheet, Dimensions } from 'react-native';
 import axios from 'axios';
 import VenueDetailsView from './VenueDetailsView';
+
+// cache the info for map during app loading
+// if the location changes like 500m update the cache
+// run expo apps in the background
 
 const MapViewScreen = ({ navigation, location }) => {
   const [venues, setVenues] = useState([]);
@@ -15,6 +19,7 @@ const MapViewScreen = ({ navigation, location }) => {
   useEffect(() => {
     if (location) {
       fetchVenues(location.latitude, location.longitude);
+      console.log("Venues fetched...")
     }
   }, [location]);
 
@@ -40,7 +45,9 @@ const MapViewScreen = ({ navigation, location }) => {
 
   const handleVenueDetailsClose = () => {
     setShowVenueDetails(false); // Hide the VenueDetailsView when the close button is pressed
+    setSelectedVenue(null); // Clear the selectedVenue state
   };
+  
 
 
   return (
@@ -78,18 +85,19 @@ const MapViewScreen = ({ navigation, location }) => {
 
       {/* Render the VenueDetailsView as a Modal */}
       <Modal
-        visible={showVenueDetails}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={handleVenueDetailsClose}
-      >
+          visible={showVenueDetails}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={handleVenueDetailsClose}
+        >
         <View style={styles.modalContainer}>
           <VenueDetailsView
             selectedVenue={selectedVenue}
             onClose={handleVenueDetailsClose}
+            navigation={navigation} // Pass the navigation prop to VenueDetailsView
           />
         </View>
-      </Modal>
+        </Modal>
 
       {/* Include the BottomButtons component */}
       <BottomButtons

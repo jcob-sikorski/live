@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
 
-const VenueDetailsView = ({ selectedVenue }) => {
+const VenueDetailsView = ({ selectedVenue, onClose, navigation }) => {
   if (!selectedVenue) return null;
 
-  const handleViewChat = (venue) => {
-    // Navigate to the chat screen or perform any other action here
-    // For example, you can use the navigation prop to navigate to another screen:
-    // navigation.navigate('ChatScreen', { venue });
+  const handleViewChat = () => {
+    // Close the modal before navigating to the ChatScreen
+    onClose(); // Call the onClose prop to close the modal
+    navigation.navigate('ChatScreen', { venue: selectedVenue });
   };
 
   // Get the screen height
@@ -25,11 +25,19 @@ const VenueDetailsView = ({ selectedVenue }) => {
       {/* "Live Chat" text */}
       <Text style={styles.liveChatText}>Live Chat</Text>
 
-      <Image source={require('./assets/chat.jpg')} style={styles.chatImage} />
+      <View style={styles.chatContainer}>
+        <Image source={require('./assets/chat.jpg')} style={styles.chatImage} />
+        <View style={styles.subjectChartsContainer}>
+          {/* Subject Chart */}
+          <Image source={require('./assets/subject-chart.jpg')} style={styles.subjectChartImage} />
+          {/* Subject Proportion Chart */}
+          <Image source={require('./assets/subject-proportion.jpg')} style={styles.subjectProportionImage} />
+        </View>
+      </View>
 
       <View style={styles.buttonContainer}>
         {/* Add the "View Chat" button */}
-        <TouchableOpacity style={styles.chatButton} onPress={() => handleViewChat(selectedVenue)}>
+        <TouchableOpacity style={styles.chatButton} onPress={handleViewChat}>
           <Text style={styles.chatButtonText}>View Chat</Text>
         </TouchableOpacity>
 
@@ -53,7 +61,8 @@ const styles = {
     position: 'absolute',
     left: 0,
     right: 0,
-    backgroundColor: '#fff',
+    bottom: 0,
+    backgroundColor: '#161618',
     padding: 16,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -62,23 +71,24 @@ const styles = {
       width: 0,
       height: -4,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 1.0,
     shadowRadius: 4,
     elevation: 5,
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#fff'
   },
   address: {
     marginTop: 8,
-    color: '#888',
+    color: '#fff',
   },
   liveChatText: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: 'blue',
+    color: '#fff',
   },
   buttonContainer: {
     position: 'absolute',
@@ -101,12 +111,14 @@ const styles = {
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  chatContainer: {
+    flexDirection: 'row', // Make chat image and subject charts side by side
+  },
   chatImage: {
     width: 200,
     height: 200,
   },
   uploadButton: {
-    backgroundColor: 'white',
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -114,6 +126,18 @@ const styles = {
   uploadIcon: {
     width: 24,
     height: 24,
+  },
+  subjectChartsContainer: {
+    flexDirection: 'column',
+    marginLeft: 10, // Add some spacing between chat image and subject charts
+  },
+  subjectChartImage: {
+    width: 150,
+    height: 110,
+  },
+  subjectProportionImage: {
+    width: 150,
+    height: 75,
   },
 };
 

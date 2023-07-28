@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import CameraScreen from './CameraScreen';
 import MapViewScreen from './MapViewScreen';
+import ChatScreen from './ChatScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,13 +29,12 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Main" options={{ headerShown: false }}>
-          {({ navigation }) => (
+          {({ navigation }) => ( // Add navigation prop here
             <MapViewScreen navigation={navigation} location={location} />
           )}
         </Stack.Screen>
-        <Stack.Screen name="Camera">
-          {({ navigation }) => <CameraScreen navigation={navigation} />}
-        </Stack.Screen>
+        <Stack.Screen name="Camera" component={CameraScreen} />
+        <Stack.Screen name="ChatScreen" component={ChatScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
