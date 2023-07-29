@@ -5,11 +5,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CameraScreen from './CameraScreen';
 import MapViewScreen from './MapViewScreen';
 import ChatScreen from './ChatScreen';
+import LoginScreen from './LoginScreen';
+
 
 const Stack = createStackNavigator();
 
 export default function App() {
   const [location, setLocation] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Add this state for authentication
 
   useEffect(() => {
     (async () => {
@@ -25,11 +28,20 @@ export default function App() {
     })();
   }, []);
 
+  // Function to handle successful login
+  const handleLoginSuccess = () => {
+    setIsAuthenticated(true);
+  };
+
+  if (!isAuthenticated) {
+    return <LoginScreen handleLoginSuccess={handleLoginSuccess} />;
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Main" options={{ headerShown: false }}>
-          {({ navigation }) => ( // Add navigation prop here
+          {({ navigation }) => (
             <MapViewScreen navigation={navigation} location={location} />
           )}
         </Stack.Screen>
