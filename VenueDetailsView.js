@@ -5,9 +5,9 @@ const VenueDetailsView = ({ selectedVenue, onClose, navigation }) => {
   if (!selectedVenue) return null;
 
   const handleViewChat = () => {
-    // Close the modal before navigating to the ChatScreen
+    // Close the modal before navigating to the Chat
     onClose(); // Call the onClose prop to close the modal
-    navigation.navigate('ChatScreen', { venue: selectedVenue });
+    navigation.navigate('Chat', { venue: selectedVenue });
   };
 
   // Get the screen height
@@ -94,7 +94,7 @@ const styles = {
     position: 'absolute',
     flexDirection: 'row', // Use flexDirection 'row' for horizontal alignment
     alignItems: 'center', // Align items in the center vertically
-    bottom: 10,
+    bottom: 20,
     left: 16,
     right: 16,
   },

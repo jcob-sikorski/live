@@ -4,9 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import CameraScreen from './CameraScreen';
 import MapViewScreen from './MapViewScreen';
-import ChatScreen from './ChatScreen';
+import Chat from './Chat';
 import LoginScreen from './LoginScreen';
-
 
 const Stack = createStackNavigator();
 
@@ -39,14 +38,25 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#303030', // Replace 'YOUR_COLOR_HERE' with the desired color
+            shadowColor: 'transparent',
+          },
+          headerTintColor: 'white', // Set the font color of the header text to white
+          headerTitleStyle: {
+            fontWeight: 'bold', // You can customize the header title style here
+          },
+        }}
+      >
         <Stack.Screen name="Main" options={{ headerShown: false }}>
           {({ navigation }) => (
             <MapViewScreen navigation={navigation} location={location} />
           )}
         </Stack.Screen>
         <Stack.Screen name="Camera" component={CameraScreen} />
-        <Stack.Screen name="ChatScreen" component={ChatScreen} />
+        <Stack.Screen name="Chat" component={Chat} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -23,7 +23,7 @@ const dummyMessages = [
     { id: '20', text: 'Sure, take care!', sender: 'bot', nick: 'Bot', timestamp: '2023-07-26T12:58:00', userIcon: require('./assets/user-icon.jpg') },
   ];
 
-  const ChatScreen = () => {
+  const Chat = () => {
     return (
       <View style={styles.container}>
         <FlatList
@@ -38,7 +38,7 @@ const dummyMessages = [
                   {formatTimestamp(item.timestamp)}
                 </Text>
               </View>
-              <Text>{item.text}</Text>
+              <Text style={styles.messageText}>{item.text}</Text>
             </View>
           )}
         />
@@ -63,16 +63,16 @@ const styles = StyleSheet.create({
     },
     userMessage: {
       alignSelf: 'flex-end',
-      backgroundColor: 'blue',
+      backgroundColor: '#303030',
       padding: 8,
-      borderRadius: 8,
+      borderRadius: 15,
       marginBottom: 8,
     },
     botMessage: {
       alignSelf: 'flex-start',
-      backgroundColor: '#FFF',
+      backgroundColor: 'blue',
       padding: 8,
-      borderRadius: 8,
+      borderRadius: 15,
       marginBottom: 8,
     },
     messageHeader: {
@@ -94,9 +94,12 @@ const styles = StyleSheet.create({
       color: 'white', // Set the font color of the timestamp to white
     },
     bot_timestamp: {
-        color: 'black', // Set the font color of the timestamp to white
+        color: 'white', // Set the font color of the timestamp to white
       },
+    messageText: {
+      color: 'white', // Set the font color of the message text to white
+    },
   });
   
 
-export default ChatScreen;
+export default Chat;
