@@ -86,7 +86,7 @@ const MapViewScreen = ({ navigation, location }) => {
       {/* Render the VenueDetailsView as a Modal */}
       <Modal
           visible={showVenueDetails}
-          animationType="slide"
+          animationType="fade"
           transparent={true}
           onRequestClose={handleVenueDetailsClose}
         >

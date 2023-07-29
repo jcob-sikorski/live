@@ -69,11 +69,11 @@ const styles = {
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: -4,
+      height: 0,
     },
     shadowOpacity: 1.0,
-    shadowRadius: 4,
-    elevation: 5,
+    shadowRadius: 10,
+    elevation: 10,
   },
   title: {
     fontSize: 18,
